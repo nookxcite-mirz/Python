@@ -20,6 +20,9 @@ if [ -z "$1" ] || [ -z "$2" ]; then
     exit 1
 fi
 
+# UnStage로 모두 내림
+git restore --staged .
+
 # --- 2. 입력 값을 변수로 지정하고 자식 프로세스에 내보내기 ---
 # 자식 셸(sh -c)에서도 이 변수들을 사용할 수 있도록 export 합니다.
 export CHUNK_SIZE="$1"
