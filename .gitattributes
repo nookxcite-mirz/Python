@@ -1,0 +1,8 @@
+# 모든 텍스트 파일의 줄바꿈을 LF로 통일
+* text=auto eol=lf
+
+# 특정 바이너리 파일들은 예외 처리
+*.png binary
+*.jpg binary
+*.uasset binary
+*.umap binary
