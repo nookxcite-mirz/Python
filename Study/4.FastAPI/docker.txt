@@ -1,0 +1,33 @@
+
+Docker 설치
+ - Docker Compose는 여러 개의 Docker 컨테이너를 함께 정의하고 실행하기 위한 도구
+ - 복잡한 Docker 환경 설정을 파일 하나로 관리하고, 명령어 한 번으로 쉽게 실행할 수 있게 해주는 도구
+ - 웹 서버(Nginx), 데이터베이스(MySQL), 백엔드(Python), Redis 등 여러 개의 컨테이너로 구성된 서비스를 YAML 파일 하나에 정의
+
+
+ Docker Desktop 설치
+ - Docker Desktop는 컨테이너 관리에 필요한 일반적인 기능을 모두 제공하는 GUI 도구
+
+ Docker Window 버전 설치 주의
+ - 줄바꿈 코드 '\r\n' 사용안하고 '\n' 사용함. 
+ - VSCode > Settings > Files > Eol 설정을 (\n)Unix 형식으로 변경
+ - Git > git config --global core.autocrlf false 설정을 추가
+ - Docker는 WSL2 가상머신에도 동작하므로 메모리를 여유있게 잡아야 한다. 
+ 
+Docker window desktop 버전에서 가상 메모리를 설정하려면?
+    1. 모든 WSL 인스턴스 종료: 
+        PowerShell 또는 CMD에서 wsl --shutdown 명령어를 실행하여 현재 실행 중인 모든 WSL 인스턴스를 종료합니다.
+    2. .wslconfig 파일 생성/편집:
+        %UserProfile% 경로에 있는 .wslconfig 파일을 메모장이나 다른 텍스트 편집기로 엽니다. (예: C:\Users\사용자이름\.wslconfig). 만약 파일이 없다면 새로 생성합니다.
+    3. 설정 추가: 
+        파일에 다음 내용을 추가하여 가상 메모리 크기를 설정합니다.
+
+        [wsl2]
+        # WSL 2 VM이 사용할 최대 메모리 크기를 4GB로 제한
+        memory=4GB
+
+        # WSL 2 VM이 사용할 최대 스왑 메모리 크기를 2GB로 설정
+        swap=2GB
+    4. 저장 및 재시작: 
+        파일을 저장하고, Docker Desktop을 다시 실행합니다. 이렇게 하면 새로운 리소스 설정이 적용됩니다
+    
