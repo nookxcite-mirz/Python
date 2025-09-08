@@ -1,0 +1,7 @@
+
+# 설치한 Extension 지우기
+ - 한번 설치한 Extension은 Disable은 가능하지만 삭제할 수 없다.
+ - 제거를 위해서는 "C:/User/username/.vscode/extensions" 폴더에 있는 설치 폴더를 삭제 해야 한다.
+ - extensions.json 파일에서 해당 정보 제거.
+
+ 
