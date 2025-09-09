@@ -1,12 +1,13 @@
 
 # docker-compose.yaml
-# mariaDB + SpringBoot
+# mariaDB + Radis
+# 로컬에서 사용될때, 아래 내용을 작성하여 docker-compose up 하면 됨
 # URL : https://www.youtube.com/watch?v=IqnAiM1A0d8&t=2004s
 
 services:
   aroundhub_db:
     image: mariadb:10.6                           # mariaDB 이미지 사용
-    container_name: db_master                     # 컨테이너 이름
+    container_name: maria_main                    # 컨테이너 이름
     restart: always 
     environment: 
       MARIADB_ROOT_PASSWORD: 123456               # 컨테이너 생성후, root의 비밀번호 설정.   
@@ -21,6 +22,7 @@ services:
 
 aroundhub_radis:
     image: radis:7.0.0 
+    container_name: radis_main                    # 컨테이너 이름
     restart: always
   ports:
     - 6380:6379
