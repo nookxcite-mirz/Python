@@ -1,0 +1,26 @@
+
+# docker-compose.yaml
+# mariaDB + SpringBoot
+# URL : https://www.youtube.com/watch?v=IqnAiM1A0d8&t=2004s
+
+services:
+  aroundhub_db:
+    image: mariadb:10.6                           # mariaDB 이미지 사용
+    container_name: db_master                     # 컨테이너 이름
+    restart: always 
+    environment: 
+      MARIADB_ROOT_PASSWORD: 123456               # 컨테이너 생성후, root의 비밀번호 설정.   
+      MARIADB_DATABASE: springboot
+      MARIADB_USER: mirz
+      MARIADB_PASSWORD: 123456      
+    volumes:
+      - ./master_db/data:/var/lib/mysql           # 각종 log와 index등 volume이 저장되는 디렉토리
+      - ./master_db/config/:/etc/mysql/conf.d     # 이전에 나온 ./master/config/my.cnf 파일을 사용하는 것으로 설정
+    ports:
+      - 3307:3306                                 # 컨테이너 접속 포트 설정
+
+aroundhub_radis:
+    image: radis:7.0.0 
+    restart: always
+  ports:
+    - 6380:6379
