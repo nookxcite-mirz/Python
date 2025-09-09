@@ -65,18 +65,53 @@ Docker 사용해 보기
     Docker Container(도커 컨테이너): Docker 이미지를 기반으로 실행되는 독립적인 애플리케이션 환경입니다.
 
 
-Docker Image 생성
- - Docker file을 바탕으로 Build 하여 Image를 생성해준다.
- - 웹서버 이미지를 생성한다.
-
-
 Docker 커맨드
  - container, image, volume, network... 등의 커맨드 대상이 있다.
  - docker [대상:container] --help 
  ex> 
     > docker run --name <container_name> -p <host_port>:<container_port> <image_name>
-    > docker run --name tomcatInst_01 -p 8080:8080 tomcat   # 이미지를 기반으로 컨테이너 실행
-    > docker contatiner ls -a                               # 컨테이너 목록 확인
-    > docker stop tomcatInst_01                             # 컨테이너 중지
-    > docker rm tomcatInst_01                               # 컨테이너 삭제
-    
+    > docker run --name tomcatInst_01 -p 8080:8080 tomcat   # 이미지를 기반으로 tomcat 컨테이너 실행
+    > docker run --name httpdInst_01 -d p 8080:8080 httpd   # 이미지를 기반으로 아파치  컨테이너 실행 (-d: 백그라운드)
+    > docker contatiner ls -a                               # 컨테이너 상태 확인 (신규)
+    > docker ps -a                                          # 컨테이너 상태 확인 (과거)
+    > docker image ls                                       # 이미지 목록 확인
+    > docker stop tomcatInst_01                             # 컨테이너 중지 (실행 중인 컨테이너만 중지 가능:Status(Up) 이면 중지)
+    > docker rm tomcatInst_01                               # 컨테이너 삭제    
+    > docker inspect <container_name> or <image_name>       # 컨테이너 상세 정보 확인 (Layers 등 확인가능)
+
+
+Dockerfile 작성
+ - Docker Image를 작성하기 위한 스크립트
+ - 주요 키워드 : Instractio 
+    - FROM : Base가 되는 Image를 지정, 주로 OS 이미지나 Runtime 이미지를 지정함. (OS: JavaRuntime, PythonRuntime, Nginx, Tomcat, httpd 등)
+    - RUN  : 이미지를 빌드할 때 사용하는 커맨드를 설정할때 사용
+    - ADD  : 이미지에 호스트의 파일이나 폴더를 추가하기 위해 사용
+    - COPY : 호스트 환경의 파일/폴더를 이미지 안에 복사
+             'ADD'와 비슷하나, URL를 지정하거나, 압축파일을 자동으로 풀지 않는 차이점이 있음.    
+    - EXPOSE : 컨테이너 실행시 접근 가능한 포트 설정
+    - ENV  : 환경 변수 지정, $name, ${name}, ${name:-else}:name 방식으로 사용    
+    - ENTRYPOINT : 이미지가 실행 될때 사용되는 명령어 설정(베이스 기본 명령)
+    - CMD  : 컨테이너 실행시 실행할 명령어 설정, RUN은 이미지를 빌드할때 사용하며, CMD는 컨테이너를 시작할때 실행된다.
+    - WORKDIR : 컨테이너 실행시 실행할 디렉토리 지정
+    - VOLUME : 퍼시스턴스 데이터를 저장할 경로 지정, 호스트 디렉토리를 도커 컨테이너에 연결 (비휘발성 데이더 저장)
+               - 컨테이너 제거시 데이터가 날아가는데 비해, DB등 유지하고 싶을 경우 사용.
+    - docker build 명령 
+        - 도커 이미지 생성
+          > docker build ${option} ${dockerfile directory path}
+          > docker build -t <image_name>
+ 
+
+Dockerfile 를 통한 Image 빌드 생성
+ - Docker file을 바탕으로 Build 하여 Image를 생성해준다.
+ ex> 폴더에 Dockerfile과 index.html 파일이 있다고 가정하고 실행한다.
+    > Dockerfile 내용
+        FROM httpd
+        COPY index.html /usr/local/apache2/htdocs/
+    > index.html 내용
+        <html><body>Hello Docker</body></html>
+    > docker build -t testimage .                           # 현재 위치에서 testimage 이미지 생성   
+    > docker build -t testimage:v1.0 .                      # 현재 위치에서 testimage 이미지 생성 & 버전 Tag 지정 
+    > docker image ls                                       # 이미지 목록 확인
+    > docker run --name testInst -p 8080:8080 testimage     # 이미지를 기반으로 실행 (아파치 + html) 
+
+
