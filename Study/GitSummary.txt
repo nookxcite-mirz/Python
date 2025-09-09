@@ -1,0 +1,39 @@
+
+# git log 사용법 - 요약으로 최근 10개만 출력
+git log --oneline -10
+
+
+# 수정된 파일 + 새로 추가된 파일 모두를 changed_files.tar로 Export 해준다. (window)
+(git diff --name-only -z; git ls-files -z --others --exclude-standard) | xargs -0 tar -cf changed_files.tar
+
+
+# 스크립트 권한 부여
+chmod +x commit_split.sh
+
+
+# 커밋 취소
+git reset --soft HEAD~1
+git reset --soft <commit_id>
+
+
+# 스테이지에서 모두 내려서 언스테이지로 옮김
+git restore --staged .
+git restore --staged <file_name>
+
+
+# 언스테이지에서 스테이지로 옮김
+git add .
+git add <file_name>
+
+
+# 커밋 내용 원격 저장소에 push
+git push origin master
+
+
+# 커밋 내용 원격 저장소에 pull
+git pull origin master
+
+
+# Branch 에서 다른 Branch로 Merge
+git switch master <branch_name:master>  # 해당 브런치로 이동
+git merge <branch_name:work>            # work 브런치에서 main 브런치로 Merge

@@ -73,3 +73,10 @@ Docker Image 생성
 Docker 커맨드
  - container, image, volume, network... 등의 커맨드 대상이 있다.
  - docker [대상:container] --help 
+ ex> 
+    > docker run --name <container_name> -p <host_port>:<container_port> <image_name>
+    > docker run --name tomcatInst_01 -p 8080:8080 tomcat   # 이미지를 기반으로 컨테이너 실행
+    > docker contatiner ls -a                               # 컨테이너 목록 확인
+    > docker stop tomcatInst_01                             # 컨테이너 중지
+    > docker rm tomcatInst_01                               # 컨테이너 삭제
+    

@@ -48,7 +48,7 @@ done < <(git diff --name-only -z; git ls-files -z --others --exclude-standard)
 if [[ -s "$CHUNK_FILE" ]]; then
     echo "--- Processing and committing final chunk #${COUNT} ---"
     xargs -0 git add < "$CHUNK_FILE"
-    git commit -m "$BASE_COMMIT_MESSAGE - (${COUNT})"
+    git commit -m "$BASE_COMMIT_MESSAGE - (${COUNT}) Done......"
 fi
 
 # --- 5. 임시 파일 삭제 ---
