@@ -14,10 +14,6 @@ bash> pip install "uvicorn[standard]"       # ASGI 서버에 필요 (uviron or h
  2. install 설치하다가 버전이슈로 실패시
     - Bash> pip install --upgrade pip               # pip 패키지 업그레이드
 
-[Cursor AI Code]
-    View > Command Palette > theme Color > Dark(Visual studio) 사용.
-
-
 
 [개발 환경 구성] https://fastapi.tiangolo.com/ko/
 >Example01 폴더
@@ -59,10 +55,28 @@ bash> "Ctrl + C"                  # 터미널 실행 종료, 서버 중지
 # 2. 웹 브라우저에서 http://localhost:8000/redoc 접속
 
 
-[패키지가 설치된지 확인]
+[패키지가 설치된지 확인] grep 명령 사용
 bash> source venv01/Scripts/activate
 venv> pip freeze | grep <package_name>
 venv> pip freeze | grep pydantic
         pydantic==2.11.7
         pydantic_core==2.33.2
 
+
+[가상 환경 재구축]
+# 1. venv01 환경 활성화
+    bash> source venv01\Scripts\activate
+
+# 2. 패키지 목록 저장
+    venv> pip freeze > requirements.txt
+
+# 3. venv01 환경 비활성화 후 삭제
+    venv> deactivate
+    bash> rmdir /s venv01
+
+# 4. 새로운 venv02 환경 생성 및 활성화
+    bash> python -m venv venv02
+    bash> source venv02\Scripts\activate
+
+# 5. 패키지 설치
+    venv> pip install -r requirements.txt

@@ -1,5 +1,16 @@
 
 
+# Cursor AI Skin 변경
+ - Cursor AI는 VS Code를 기반으로 만들어졌기 때문에, VS Code의 테마 변경 방식을 그대로 따릅니다. 
+   애플리케이션의 색상 테마는 명령어 팔레트:theme Color > 원하는 시킨 선택 (Dark:VisualStudio 권장)
+   View > Command Palette > theme Color > Dark(Visual studio) 사용.
+
+# Cursor AI Default Terminal 변경
+ - 명령어 팔레트: Terminal:Select Default Profile > 원하는 터미널 선택
+   View > Command Palette > Terminal:Select Default Profile > Git Bash
+
+    
+
 # AI Edit
 1. Ctrl+K 
     변경할 사항에 대한 제안을 요청 받는다.
