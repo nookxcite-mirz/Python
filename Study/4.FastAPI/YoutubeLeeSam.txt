@@ -1,0 +1,6 @@
+
+
+https://fastapi.tiangolo.com/ko/ [FastAPI 공식 문서]
+
+참고 youtube
+https://www.youtube.com/watch?v=ZqSpl0Ic8ik - 21분 시정중

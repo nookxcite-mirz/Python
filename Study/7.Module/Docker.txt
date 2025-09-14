@@ -138,8 +138,8 @@ Docker window desktop 버전에서 가상 메모리를 설정하려면?
     - secrets
     - configs
  - Docker-Compose 파일 실행
-    - docker-compose up                                 # 기본적으로 'docker-compose.yaml' 파일 실행
-    - docker-compose -f <compose_file_name> up -d       # 지정한 파일 실행 (-f:파일이름 지정, -d:백그라운드로 실행)
+    - docker compose up                                 # 기본적으로 'docker-compose.yaml' 파일 실행
+    - docker compose -f <compose_file_name> up -d       # 지정한 파일 실행 (-f:파일이름 지정, -d:백그라운드로 실행)
                                                         # 이미 컨테이너가 있을 경우 Stop에서 Start로 실행됨     
 
 [Docker 이미지 생성 및 저장하기]
@@ -191,7 +191,7 @@ Docker window desktop 버전에서 가상 메모리를 설정하려면?
     - MaxRAMPercentage        
         - 충분한 메모리(512M 이상)가 필요한 App의 최대 힙 사이즈 설정
         - Defualt : 25% (512M 부터는 25%씩 증가하며 힙이 할당됨)
- - Docker 커멘드를 활용하여 테스트 수행 에시
+ - Docker 커멘드를 활용하여 테스트 수행 예시
     - docker run -m 100M openjdk:8 java -XX:+PrintFlagsFinal -version | find "InitialRAMPercentage"   # 초기 메모리% 값 확인
       : 사용메모리 100M, 사용이미지 openjdk:8, 최종적용된 결과물중 InitialRAMPercentage의 값 필터 출력
     - docker run -m 2GB openjdk:8 java -XshowSettings:VM -version

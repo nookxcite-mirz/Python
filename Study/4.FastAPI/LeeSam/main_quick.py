@@ -56,5 +56,3 @@ def update_item(item_id: int, item: Item):
     return {"item_name": item.name, "item_id": item_id}
 
 # uvicorn main:app --reload / Ctlr+C(종료)
-
-# https://www.youtube.com/watch?v=ZqSpl0Ic8ik  (21분 보는중.)

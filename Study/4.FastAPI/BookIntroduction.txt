@@ -1,0 +1,6 @@
+
+# 도커 이미지 생성
+# - docker desktop이 실행되고 있어야 합니다.
+bash /BookIntroduction> docker compose build <--no-cache>
+
+# docker Images에서 확인 가능.

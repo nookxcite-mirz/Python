@@ -1,4 +1,10 @@
 
+
+로컬영역과 Docker영역은 서로 다르다.
+로컬영역에서 개발 및 테스트를 위해서는 로컬영역에 venv등으로 가상 모듈 환경을 구축하며,
+Docker는 Docker툴에 구성할 개발 환경을 구축하여 테스트 할수 있다. 추후 Docker로 만들어진 image를 사용자들이 공통으로 사용가능
+
+
 [설치]
 bash> pip install "FastAPI"
 bash> pip install "uvicorn[standard]"       # ASGI 서버에 필요 (uviron or hypercorn 사용)
@@ -16,7 +22,7 @@ bash> pip install "uvicorn[standard]"       # ASGI 서버에 필요 (uviron or h
 
 
 [개발 환경 구성] https://fastapi.tiangolo.com/ko/
->Example01 폴더
+>LeeSam 폴더
 ----------------------------------------------------------------------------------------------
 bash> python -m venv venv01                             # 가상환경 생성
 base> venv01/Scripts/activate                           # 가상환경 활성화
