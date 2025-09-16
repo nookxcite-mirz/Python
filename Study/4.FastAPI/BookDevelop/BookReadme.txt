@@ -71,9 +71,24 @@ FastAPI에서는 정의된 데이터만 전송되도록 요청바디를 검증 �
 FastAPI에서 모델은 데이터가  어떻게 전달되고 처리돼야 하는지 정의하는 구조화된 클래스를 말한다.
 모델은 pydanic의 BaseModel를 파생하여 생성한다.
 
+# pydanic 포멧에 맞게 Post를 보내서 내용을 저장하고, Get을 내용을 확인한다.
+bash>
+curl -X POST http://127.0.0.1:8000/todo -H "accept: application/json" -H "Content-Type: application/json" -d '{"id": 1, "item": "Validation Models"}'
+curl -X POST http://127.0.0.1:8000/todo -H "accept: application/json" -H "Content-Type: application/json" -d '{"id": 1, "item": { "name": "apple", "status": "red"} }'
+curl -X POST http://127.0.0.1:8000/todo -H "accept: application/json" -H "Content-Type: application/json" -d '{"id": 2, "item": { "name": "banana", "status": "yellow"} }'
+curl -X GET http://127.0.0.1:8000/todo/1
 
 
+# 요청 바디
+ POST 와 UPDATE등 라우팅 메서드를 사용해 API로 전달되는 데이터
+  - POST    : 새로운 데이터를 서버에 추가해준다
+  - UPDATE  : 기존의 데이터를 변경해준다
+
+# 인터렉티브 UI 
+    # Swagger   : /docs
+    # ReDoc     : /redoc
+사용자가 입력해야 할 데이터 샘플을 설정하기 위해 모델 클래스 안에 Config 클래스를 정의 할수 있다.
 
 
-
-
+# Chapter 3 : 응답 모델과 오류 처리
+------------------------------------------------------------------------------
