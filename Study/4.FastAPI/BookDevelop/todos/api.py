@@ -10,8 +10,14 @@ app = FastAPI()
 async def welcome() -> dict:
     return {"message": "Hello, World!"}
 
+    
 # todo_router 클래스를 추가함.
 app.include_router(todo_router)
 
 # venv> uvicorn api:app --port 8000 --reload
+"""
+curl -X POST http://127.0.0.1:8000/todo -H "accept: application/json" -H "Content-Type: application/json" -d "{\"id\":1, \"item\": \"This todo will be retrieved without exposing the ID\"}"
+curl -X POST http://127.0.0.1:8000/todo -H "accept: application/json" -H "Content-Type: application/json" -d "{\"id\":2, \"item\": \"This todo will be retrieved without exposing the ID\"}"
+curl -X GET http://127.0.0.1:8000/todo -H "accept: application/json"
+"""
 # 8000번 포트에서 서버 실행.

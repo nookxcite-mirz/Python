@@ -92,3 +92,50 @@ curl -X GET http://127.0.0.1:8000/todo/1
 
 # Chapter 3 : 응답 모델과 오류 처리
 ------------------------------------------------------------------------------
+응답 모델
+    - from typing import list
+    - 출력 모델 구현 OutModel
+    - @app.get("/todo", response_model=OutModel)
+
+오류 처리
+    - raise  HTTPException()...
+
+응답 코드
+    - @app.post("/todo", status_code=201) 
+    - 기본 성공 응답코드는 200이고, 변경이 필요한 경우 사용
+
+
+# Chapter 4 : Jinja2 템플릿팅
+------------------------------------------------------------------------------
+FastAPI에서 Jinja2는 템플릿 엔진으로 가장 많이 사용되는 선택지 중 하나입니다.
+FastAPI는 API 구축에 특화된 프레임워크지만, 웹 페이지를 렌더링해야 하는 경우 Jinja2는 파이썬 생태계에서 가장 널리 알려지고 안정적인 템플릿 엔진입니다.
+
+1. Jinja2 설치
+    bash> pip install Jinja2 
+    bash> pip install jinja2 python-multipart
+
+2. 템플릿 파일 생성
+    HTML 파일과 유사한 형태로, 확장자는 .html이나 .jinja2를 주로 사용합니다. 변수나 제어 구조는 {{...}}, {%...%} 구문을 사용합니다.
+    
+3. Python 코드에서 템플릿 렌더링
+
+    from jinja2 import Environment, FileSystemLoader
+
+    # 템플릿이 있는 디렉터리 경로를 지정합니다.
+    env = Environment(loader=FileSystemLoader('templates'))
+
+    # 'index.html' 템플릿을 로드합니다.
+    template = env.get_template('index.html')
+
+    # 템플릿에 전달할 데이터를 딕셔너리 형태로 정의합니다.
+    data = {
+        'title': 'Jinja2 사용 예시',
+        'greeting': '환영합니다!',
+        'items': ['사과', '바나나', '체리']
+    }
+
+    # 데이터를 템플릿에 렌더링하고 결과를 출력합니다.
+    rendered_html = template.render(data)
+    print(rendered_html)
+
+
