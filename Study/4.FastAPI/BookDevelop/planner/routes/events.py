@@ -1,58 +1,63 @@
-from fastapi import APIRouter, HTTPException, status, Body
-from models.events import Event
+from fastapi import APIRouter, HTTPException, Request, status, Depends
+from database.connection import get_session
+from models.events import Event, EventUpdate
+from sqlmodel import select
 from typing import List
 
 event_router = APIRouter(
     tags=["Events"],
 )
 
-
 events = []
 
 event_counter = 1
 
 @event_router.get("/", response_model=List[Event])
-async def get_all_events() -> List[Event]:
+async def get_all_events(session=Depends(get_session)) -> List[Event]:
     """모든 이벤트 조회"""
+    statement = select(Event)
+    events = session.exec(statement).all()
     return events
 
 @event_router.get("/{id}", response_model=Event)
-async def get_event(id: int) -> Event:
+async def get_event(id: int, session=Depends(get_session)) -> Event:
     """특정 이벤트 조회"""
-    for event in events:
-        if event.id == id:
-            return event
-    raise HTTPException( status_code=status.HTTP_404_NOT_FOUND, detail="Event not found" )
+    event = session.get(Event, id)
+    if event:
+        return event
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Event not found")
+
 
 @event_router.post("/new")
-async def create_event(body: Event = Body(...)) -> dict:
+async def create_event(new_event:Event, session=Depends(get_session)) -> dict:
     """새 이벤트 생성"""
-    global event_counter
-    body.id = event_counter
-    events.append(body)
-    event_counter += 1
-    return {"message": "Event created successfully", "event_id": body.id}
+    session.add(new_event)
+    session.commit()
+    session.refresh(new_event)
+    return {"message": "Event created successfully", "event_id": new_event.id}
 
-@event_router.put("/{id}")
-async def update_event(id: int, body: Event = Body(...)) -> dict:
+@event_router.put("/edit/{id}", response_model=Event)
+async def update_event(id: int, new_data: EventUpdate, session=Depends(get_session)) -> Event:
     """이벤트 수정"""
-    for i, event in enumerate(events):
-        if event.id == id:
-            body.id = id
-            events[i] = body
-            return {"message": "Event updated successfully"}
-    raise HTTPException(
-        status_code=status.HTTP_404_NOT_FOUND, 
-        detail="Event not found"
-    )
+    event = session.get(Event, id)
+    if event:
+        event_data = new_data.dict(exclude_unset=True)
+        for key, value in event_data.items():
+            setattr(event, key, value)
+        session.commit()
+        session.refresh(event)
+        return event
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Event not found")
+    
 
-@event_router.delete("/{id}")
-async def delete_event(id: int) -> dict:
+@event_router.delete("/delete/{id}")
+async def delete_event(id: int, session=Depends(get_session)) -> dict:
     """이벤트 삭제"""
-    for i, event in enumerate(events):
-        if event.id == id:
-            del events[i]
-            return {"message": "Event deleted successfully"}
+    event = session.get(Event, id)
+    if event:
+        session.delete(event)
+        session.commit()
+        return {"message": "Event deleted successfully"}
     raise HTTPException(
         status_code=status.HTTP_404_NOT_FOUND, 
         detail="Event not found"

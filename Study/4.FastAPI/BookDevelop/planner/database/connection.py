@@ -1,27 +1,16 @@
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
-import os
+from sqlmodel import SQLModel, Session, create_engine
+from models.events import Event
 
-# 데이터베이스 URL 설정 (환경변수에서 가져오거나 기본값 사용)
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./planner.db")
 
-# SQLAlchemy 엔진 생성
-engine = create_engine(
-    DATABASE_URL,
-    connect_args={"check_same_thread": False} if "sqlite" in DATABASE_URL else {}
-)
+database_filename = "planner.db"
+database_connection = f"sqlite:///{database_filename}"
+connect_args = {"check_same_thread": False} 
+engine_url = create_engine(database_connection, echo=True, connect_args=connect_args)
 
-# 세션 팩토리 생성
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+def conn():
+    SQLModel.metadata.create_all(engine_url)
 
-# Base 클래스 생성 (모델들이 상속받을 클래스)
-Base = declarative_base()
+def get_session():
+    with Session(engine_url) as session:
+        yield session
 
-def get_db():
-    """데이터베이스 세션을 가져오는 의존성 함수"""
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
