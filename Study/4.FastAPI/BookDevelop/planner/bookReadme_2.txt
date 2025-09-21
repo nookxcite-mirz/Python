@@ -11,7 +11,7 @@
 
 # Chapter 6 : Database
 ------------------------------------------------------------------------------
-1. SQLModel
+1. SQLModel - sqlmodel 모듈 사용
 SQLModel은 파이썬의 타입 힌트를 활용하여 SQL 데이터베이스를 다루는 라이브러리입니다. 
 ORM(Object-Relational Mapper)의 일종으로, 파이썬 객체를 사용하여 데이터베이스 테이블과 상호 작용할 수 있게 해줍니다.
 
@@ -23,7 +23,7 @@ ORM(Object-Relational Mapper)의 일종으로, 파이썬 객체를 사용하여 
     조인(JOIN): 여러 테이블의 데이터를 결합하여 복잡한 관계를 쉽게 표현할 수 있습니다.
     타입 힌트: 파이썬 코드가 SQL을 생성하므로, 개발자는 SQL 쿼리 없이 파이썬 코드로 데이터를 조작할 수 있습니다.
 
-2. MongoDB
+2. MongoDB - beanie 모듈 사용
 MongoDB는 유연한 스키마를 가진 NoSQL 데이터베이스입니다. 
 데이터가 JSON과 유사한 BSON(Binary JSON) 형식의 **문서(Document)**로 저장됩니다.
 
@@ -135,4 +135,11 @@ db.콜렉션명.mapReduce(func_map, func_reduce,{out:{inline:1}})
 db.콜렉션명.mapReduce(func_map, func_reduce,{out:"OutCollectionName"})
 db.콜렉션명.mapReduce(func_map, func_reduce,{query:{age:{$gt:5}}, out:{inline:1}})
 
+
+# Chapter 7 : 보안
+------------------------------------------------------------------------------
+보안 인증 방식
+    - OAuto2 와 JWT를 사용한 App 보안.
+    - 의존성 주입을 사용한 라우트 보호
+    - 교차 출처 리소스 공유(CORS) 설정
 
